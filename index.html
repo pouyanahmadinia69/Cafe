@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#f0e0c7">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="V CAFE">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="icon-192.png">
+<title>V CAFE | مدیریت سفارش</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7eedd;--card:#fdf8ee;--ink:#562014;--mute:#9a7058;--line:#e9d6b6;--main:#562014;--main-ink:#f0e0c7;--accent:#b07a52;--danger:#9c2f1f;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-theme="dark"]{--bg:#2b130b;--card:#3a1d11;--ink:#f0e0c7;--mute:#c4a384;--line:#55301f;--main:#f0e0c7;--main-ink:#562014;--accent:#d1a272;--danger:#e49a82}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Vazirmatn,Tahoma,sans-serif;line-height:1.7}
+header{padding:14px 16px 0}
+h1{font-size:20px;margin:0 0 10px;font-weight:800}
+nav{display:flex;gap:6px;border-bottom:2px solid var(--line)}
+nav button{flex:1;padding:10px 4px;border:0;background:none;color:var(--mute);font:inherit;font-weight:600;border-bottom:3px solid transparent;margin-bottom:-2px;cursor:pointer}
+nav button.on{color:var(--main);border-color:var(--main)}
+main{padding:14px 16px 90px;max-width:760px;margin:auto}
+.cats{display:flex;gap:6px;overflow-x:auto;margin-bottom:12px;padding-bottom:4px}
+.cats button{flex:none;padding:6px 14px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;cursor:pointer}
+.cats button.on{background:var(--line);color:var(--ink);border-color:var(--ink);font-weight:600}
+.item{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:var(--card);border:1px solid var(--line);border-radius:10px;margin-bottom:8px}
+.item b{display:block}.item small{color:var(--mute)}
+.qty{display:flex;align-items:center;gap:10px}
+.qty button,.btn{border:0;border-radius:8px;font:inherit;font-weight:600;cursor:pointer}
+.qty button{width:34px;height:34px;background:var(--line);color:var(--ink);font-size:18px}
+.qty button.minus{background:transparent;border:1px solid var(--line)}
+.qty span{min-width:20px;text-align:center;font-weight:800}
+.bar{position:fixed;bottom:0;left:0;right:0;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:var(--card);border-top:1px solid var(--line);display:flex;gap:10px;align-items:center}
+.bar input{width:80px;padding:9px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;text-align:center}
+.btn{padding:11px 16px;background:var(--main);color:var(--main-ink)}
+.btn.alt{background:var(--line);color:var(--ink)}
+.btn:disabled{opacity:.4}
+.bar .btn{flex:1}
+.order{background:var(--card);border:1px solid var(--line);border-right:6px solid var(--accent);border-radius:10px;padding:12px 14px;margin-bottom:10px}
+.order.preparing{border-right-color:var(--main)}.order.ready{border-right-color:var(--ink)}.order.paid{border-right-color:var(--line);opacity:.7}
+.order h3{margin:0;font-size:16px;display:flex;justify-content:space-between}
+.order ul{margin:6px 0;padding-right:18px;color:var(--mute)}
+.row{display:flex;gap:8px;margin-top:8px}.row .btn{flex:1}
+.tag{font-size:12px;padding:1px 10px;border-radius:99px;background:var(--line);font-weight:600}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px}
+.stat b{font-size:20px;display:block}.stat span{color:var(--mute);font-size:13px}
+.empty{text-align:center;color:var(--mute);padding:40px 10px}
+.menu-edit{display:flex;gap:6px;margin:14px 0;flex-wrap:wrap}
+.menu-edit input{flex:1 1 90px;min-width:0;padding:9px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);font:inherit}
+.del{background:none;border:0;color:var(--danger);font:inherit;cursor:pointer}
+.chat{display:flex;flex-direction:column;gap:8px;margin-bottom:80px}
+.msg{padding:10px 14px;border-radius:12px;max-width:85%;white-space:pre-wrap}
+.msg.me{align-self:flex-start;background:var(--main);color:var(--main-ink)}
+.msg.bot{align-self:flex-end;background:var(--card);border:1px solid var(--line)}
+.bar input.say{flex:1;width:auto;text-align:right}
+a.btn{text-decoration:none;text-align:center;display:block}
+.invoice{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:12px}
+.invoice h2{margin:0 0 6px;font-size:18px}.invoice p{margin:0;color:var(--mute)}
+.ln{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed var(--line)}
+.ln.tot{font-weight:800;font-size:17px;border-bottom:0}
+.share{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.err{min-height:24px;color:var(--accent);font-weight:600;margin:6px 0}
+@media print{header,.noprint{display:none!important}body{background:#fff;color:#000}.invoice{border:0}.ln{border-color:#999}}
+.lg{height:44px;border-radius:8px;vertical-align:middle;margin-left:8px}.lg.big{display:block;height:90px;margin:0 auto 8px}
+h1{display:flex;align-items:center}
+</style>
+</head>
+<body>
+<header><h1><img class="lg" src="logo.png" alt="V CAFE"> مدیریت سفارش</h1>
+<nav id="nav"><button data-t="new" class="on">سفارش جدید</button><button data-t="board">سفارش‌ها</button><button data-t="menu">منو و فروش</button><button data-t="ai">🤖 دستیار</button></nav></header>
+<main id="app"></main>
+<script>
+var DEF=[
+{id:1,n:"اسپرسو",p:60000,c:"نوشیدنی گرم"},{id:2,n:"کاپوچینو",p:85000,c:"نوشیدنی گرم"},{id:3,n:"چای",p:35000,c:"نوشیدنی گرم"},
+{id:4,n:"آیس لاته",p:95000,c:"نوشیدنی سرد"},{id:5,n:"لیموناد",p:70000,c:"نوشیدنی سرد"},
+{id:6,n:"کیک شکلاتی",p:90000,c:"دسر"},{id:7,n:"چیزکیک",p:110000,c:"دسر"},
+{id:8,n:"ساندویچ مرغ",p:140000,c:"غذا"},{id:9,n:"پیتزا مارگاریتا",p:220000,c:"غذا"}];
+var S={menu:DEF,orders:[],seq:1};
+try{var raw=localStorage.getItem("cafe-app");if(raw){var d=JSON.parse(raw);if(d&&d.menu)S=d}}catch(e){}
+function save(){try{localStorage.setItem("cafe-app",JSON.stringify(S))}catch(e){}}
+var tab="new",cat="همه",cart={},table="";
+var fa=function(n){return Number(n).toLocaleString("fa-IR")};
+var money=function(n){return fa(n)+" تومان"};
+var TAX=0.1,confirmId="",msg="",inv=0,phone="";
+function en(t){return String(t).replace(/[۰-۹]/g,function(c){return c.charCodeAt(0)-1776}).replace(/[٠-٩]/g,function(c){return c.charCodeAt(0)-1632})}
+function grand(o){return o.sum+Math.round(o.sum*TAX)}
+function keep(){var a=$("#tbl"),b=$("#tel");if(a)table=a.value;if(b)phone=b.value}
+function intl(p){var d=en(p||"").replace(/\D/g,"");if(d.indexOf("00")===0)d=d.slice(2);else if(d[0]==="0")d="98"+d.slice(1);return d}
+function invText(o){
+  var L=["V CAFE ☕ | فاکتور شماره "+fa(o.id)];if(o.t)L.push("میز: "+o.t);
+  o.items.forEach(function(i){L.push(fa(i.q)+" × "+i.n+" = "+money(i.q*i.p))});
+  var tax=Math.round(o.sum*TAX);
+  L.push("جمع: "+money(o.sum));L.push("مالیات ۱۰٪: "+money(tax));L.push("مبلغ نهایی: "+money(o.sum+tax));L.push("ممنون از انتخاب شما 🌟");
+  return L.join("\n")}
+function viewInv(){
+  var o=S.orders.find(function(x){return x.id===inv});if(!o){inv=0;return ""}
+  var tax=Math.round(o.sum*TAX),tx=encodeURIComponent(invText(o)),ph=en(o.ph||"").replace(/\D/g,"");
+  var h='<div class="invoice"><img class="lg big" src="logo.png" alt="V CAFE"><h2>فاکتور شماره '+fa(o.id)+'</h2>'+(o.t?'<p>میز '+o.t+'</p>':'')+(o.ph?'<p>📱 '+o.ph+'</p>':'');
+  o.items.forEach(function(i){h+='<div class="ln"><span>'+fa(i.q)+' × '+i.n+'</span><span>'+money(i.q*i.p)+'</span></div>'});
+  h+='<div class="ln"><span>جمع</span><span>'+money(o.sum)+'</span></div><div class="ln"><span>مالیات ۱۰٪</span><span>'+money(tax)+'</span></div><div class="ln tot"><span>مبلغ نهایی</span><span>'+money(o.sum+tax)+'</span></div></div>';
+  h+='<div class="noprint"><div class="err">'+msg+'</div><div class="share">'+
+   '<a class="btn" href="sms:'+ph+'?&body='+tx+'">💬 پیامک</a>'+
+   '<a class="btn" target="_blank" rel="noopener" href="https://wa.me/'+intl(o.ph)+'?text='+tx+'">🟢 واتساپ</a>'+
+   '<a class="btn" target="_blank" rel="noopener" href="https://t.me/share/url?url=%20&text='+tx+'">✈️ تلگرام</a>'+
+   '<button class="btn" id="prn">🖨 پرینت</button><button class="btn alt" id="cpy">📋 کپی متن</button><button class="btn alt" data-back="">بازگشت</button></div></div>';
+  return h}
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition,rec=null,listening=false,speakOn=true;
+function speak(t){if(!speakOn||!window.speechSynthesis||!t)return;try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang="fa-IR";speechSynthesis.speak(u)}catch(e){}}
+function note(t){chat.push({role:"assistant",content:t});render();fillChat()}
+function toggleMic(){
+  if(!SR){note("مرورگر شما ورودی صوتی را پشتیبانی نمی‌کند. Chrome را امتحان کن.");return}
+  if(listening&&rec){rec.stop();return}
+  rec=new SR();rec.lang="fa-IR";rec.interimResults=false;
+  rec.onresult=function(e){var tx=e.results[0][0].transcript;listening=false;askAgent(tx)};
+  rec.onerror=function(e){listening=false;note(e.error==="not-allowed"?"اجازه‌ی میکروفون داده نشد یا در این صفحه مسدود است.":"صدایی شنیده نشد، دوباره بزن.")};
+  rec.onend=function(){if(listening){listening=false;render();fillChat()}};
+  try{rec.start();listening=true;render();fillChat()}catch(e){listening=false}}
+var $=function(s){return document.querySelector(s)};
+var ST={new:"جدید",preparing:"در حال آماده‌سازی",ready:"آماده تحویل",paid:"پرداخت‌شده"};
+var NEXT={new:["preparing","شروع آماده‌سازی"],preparing:["ready","آماده است"],ready:["paid","دریافت پول"]};
+
+function cats(){var c=["همه"];S.menu.forEach(function(m){if(c.indexOf(m.c)<0)c.push(m.c)});return c}
+function total(){return S.menu.reduce(function(s,m){return s+(cart[m.id]||0)*m.p},0)}
+function count(){return Object.keys(cart).reduce(function(s,k){return s+cart[k]},0)}
+
+function viewNew(){
+  var h='<div class="cats">'+cats().map(function(c){return '<button data-cat="'+c+'" class="'+(c===cat?'on':'')+'">'+c+'</button>'}).join("")+'</div>';
+  S.menu.filter(function(m){return cat==="همه"||m.c===cat}).forEach(function(m){
+    var q=cart[m.id]||0;
+    h+='<div class="item"><div><b>'+m.n+'</b><small>'+money(m.p)+'</small></div><div class="qty">'+
+    (q?'<button class="minus" data-dec="'+m.id+'" aria-label="کم کردن">−</button><span>'+fa(q)+'</span>':'')+
+    '<button data-inc="'+m.id+'" aria-label="اضافه کردن">+</button></div></div>'});
+  h+='<div class="bar"><input id="tbl" placeholder="میز" value="'+table+'" inputmode="numeric" aria-label="شماره میز"><input id="tel" placeholder="موبایل" value="'+phone+'" inputmode="tel" aria-label="شماره موبایل" style="width:120px"><button class="btn" id="send" '+(count()?'':'disabled')+'>ثبت سفارش'+(count()?' · '+money(total()+Math.round(total()*TAX)):'')+'</button></div>';
+  return h}
+
+function viewBoard(){
+  var act=S.orders.filter(function(o){return o.s!=="paid"}).reverse();
+  var done=S.orders.filter(function(o){return o.s==="paid"}).reverse().slice(0,5);
+  if(!S.orders.length)return '<div class="empty">هنوز سفارشی ثبت نشده.<br>از تب «سفارش جدید» شروع کن.</div>';
+  var h="";
+  act.concat(done).forEach(function(o){
+    var lines=o.items.map(function(i){return '<li>'+fa(i.q)+' × '+i.n+'</li>'}).join("");
+    h+='<div class="order '+o.s+'"><h3><span>سفارش '+fa(o.id)+(o.t?' · میز '+o.t:'')+'</span><span class="tag">'+ST[o.s]+'</span></h3><ul>'+lines+'</ul>'+(o.ph?'<small>📱 '+o.ph+'</small><br>':'')+'<b>'+money(grand(o))+'</b> <small>(با ۱۰٪ مالیات)</small><div class="row"><button class="btn alt" data-inv="'+o.id+'">🧾 فاکتور</button></div>'+
+    (NEXT[o.s]?'<div class="row"><button class="btn" data-next="'+o.id+'">'+NEXT[o.s][1]+'</button><button class="btn alt" data-cancel="'+o.id+'">'+(confirmId==="c"+o.id?'مطمئنی؟ دوباره بزن':'لغو')+'</button></div>':'')+'</div>'});
+  return h}
+
+function viewMenu(){
+  var paid=S.orders.filter(function(o){return o.s==="paid"});
+  var sales=paid.reduce(function(s,o){return s+grand(o)},0);
+  var h='<div class="stats"><div class="stat"><b>'+money(sales)+'</b><span>فروش امروز</span></div><div class="stat"><b>'+fa(paid.length)+'</b><span>سفارش پرداخت‌شده</span></div></div>';
+  h+='<b>منو</b>';
+  S.menu.forEach(function(m){h+='<div class="item"><div><b>'+m.n+'</b><small>'+m.c+' · '+money(m.p)+'</small></div><button class="del" data-del="'+m.id+'">حذف</button></div>'});
+  h+='<div class="menu-edit"><input id="mn" placeholder="نام"><input id="mp" placeholder="قیمت" inputmode="numeric"><input id="mc" placeholder="دسته"><button class="btn" id="madd">افزودن</button></div>';
+  h+='<div class="err">'+msg+'</div><button class="btn alt" id="reset">'+(confirmId==="r"?'مطمئنی؟ دوباره بزن تا همه پاک شود':'پاک کردن همه سفارش‌ها')+'</button>';
+  return h}
+
+
+var chat=[],busy=false;
+function viewAi(){
+  var h='<button class="btn alt" id="spk" style="margin-bottom:10px">'+(speakOn?'🔊 صدای دستیار روشن':'🔇 صدای دستیار خاموش')+'</button><div class="chat">';
+  if(!chat.length)h+='<div class="empty">سفارش را مثل حرف زدن بنویس:<br>«میز ۳ دو تا کاپوچینو و یک چیزکیک»</div>';
+  chat.forEach(function(m){h+='<div class="msg '+(m.role==="user"?"me":"bot")+'"></div>'});
+  h+='</div><div class="bar"><input class="say" id="say" placeholder="سفارش را بنویس…" aria-label="پیام"><button class="btn alt" id="mic" style="flex:none" aria-label="میکروفون">'+(listening?'⏹':'🎤')+'</button><button class="btn" id="ask" style="flex:none">'+(busy?'…':'ارسال')+'</button></div>';
+  return h}
+function fillChat(){var els=document.querySelectorAll(".msg");chat.forEach(function(m,i){if(els[i])els[i].textContent=m.content})}
+var INSTR="تو دستیار سفارش‌گیر یک کافه‌ای. فارسی، کوتاه و مؤدب جواب بده. فقط آیتم‌های منو را سفارش بگیر (با ابزار get_menu منو را ببین). وقتی شماره‌ی میز و آیتم‌ها معلوم بود با ابزار add_order سفارش را ثبت کن. شماره‌ی میز و شماره‌ی موبایل مشتری هر دو لازم است؛ اگر نگفت بپرس. قیمت‌ها بدون مالیات‌اند و ۱۰٪ مالیات به فاکتور اضافه می‌شود؛ جمع نهایی را با مالیات بگو. جواب‌ها کوتاه باشند چون بلند خوانده می‌شوند. اگر آیتمی در منو نیست، بگو و جایگزین پیشنهاد بده. در پایان خلاصه‌ی سفارش و جمع مبلغ را بگو.";
+var TOOLS=[
+{name:"get_menu",description:"فهرست منو با قیمت به تومان",inputSchema:{type:"object",properties:{}},execute:function(){return S.menu.map(function(m){return{name:m.n,price:m.p,category:m.c}})}},
+{name:"add_order",description:"ثبت سفارش برای یک میز",inputSchema:{type:"object",properties:{table:{type:"string"},phone:{type:"string"},items:{type:"array",items:{type:"object",properties:{name:{type:"string"},qty:{type:"number"}},required:["name","qty"]}}},required:["table","phone","items"]},
+execute:function(a){
+  var items=[],bad=[];
+  (a.items||[]).forEach(function(i){
+    var m=S.menu.find(function(x){return x.n===i.name})||S.menu.find(function(x){return x.n.indexOf(i.name)>=0||i.name.indexOf(x.n)>=0});
+    var q=Math.max(1,Math.min(20,Math.round(i.qty||1)));
+    if(m)items.push({n:m.n,q:q,p:m.p});else bad.push(i.name)});
+  if(bad.length)throw new Error("در منو نیست: "+bad.join("، "));
+  if(!items.length)throw new Error("آیتمی نداده");
+  var sum=items.reduce(function(t,i){return t+i.q*i.p},0);
+  var o={id:S.seq++,t:String(a.table||"").trim(),ph:en(String(a.phone||"")).trim(),items:items,sum:sum,s:"new"};
+  S.orders.push(o);save();
+  return{ok:true,order_id:o.id,subtotal:sum,tax:Math.round(sum*TAX),total:grand(o)}}}];
+async function askAgent(text){
+  busy=true;chat.push({role:"user",content:text});render();fillChat();
+  try{
+    var sample=await claude.use("sample");
+    if(!sample)throw new Error("na");
+    var input=chat.map(function(m,i){return{role:m.role,content:i===0?INSTR+"\n\n"+m.content:m.content}});
+    var r=await sample(input,{tools:TOOLS,cache:false});
+    chat.push({role:"assistant",content:r.text||"انجام شد."});speak(r.text||"");
+  }catch(e){chat.push({role:"assistant",content:"الان نمی‌توانم جواب بدهم. می‌توانی از تب «سفارش جدید» دستی ثبت کنی."})}
+  busy=false;render();fillChat()}
+function render(){
+  document.querySelectorAll("#nav button").forEach(function(b){b.classList.toggle("on",b.dataset.t===tab)});
+  $("#app").innerHTML=inv?viewInv():tab==="new"?viewNew():tab==="board"?viewBoard():tab==="ai"?viewAi():viewMenu()}
+
+document.addEventListener("click",function(e){
+  var t=e.target.closest("button");if(!t)return;var d=t.dataset;
+  if(d.t){tab=d.t;confirmId="";inv=0;msg=""}
+  else if(t.id==="ask"){var v=$("#say").value.trim();if(v&&!busy)askAgent(v);return}
+  else if(t.id==="mic"){toggleMic();return}
+  else if(t.id==="spk"){speakOn=!speakOn;try{speechSynthesis.cancel()}catch(e){}}
+  else if(d.inv){inv=+d.inv;msg=""}
+  else if(d.back!==undefined){inv=0;msg=""}
+  else if(t.id==="prn"){try{window.print()}catch(e){}return}
+  else if(t.id==="cpy"){var oo=S.orders.find(function(x){return x.id===inv});if(oo){try{navigator.clipboard.writeText(invText(oo));msg="متن فاکتور کپی شد ✅"}catch(e){msg="کپی نشد."}}}
+  else if(d.cat){keep();cat=d.cat}
+  else if(d.inc){keep();cart[d.inc]=(cart[d.inc]||0)+1}
+  else if(d.dec){keep();cart[d.dec]=Math.max(0,(cart[d.dec]||0)-1);if(!cart[d.dec])delete cart[d.dec]}
+  else if(t.id==="send"){
+    var items=S.menu.filter(function(m){return cart[m.id]}).map(function(m){return{n:m.n,q:cart[m.id],p:m.p}});
+    if(!items.length)return;
+    keep();S.orders.push({id:S.seq++,t:table.trim(),ph:phone.trim(),items:items,sum:total(),s:"new"});phone="";
+    cart={};table="";tab="board";save()}
+  else if(d.next){var o=S.orders.find(function(x){return x.id==d.next});if(o){o.s=NEXT[o.s][0];save()}}
+  else if(d.cancel){if(confirmId==="c"+d.cancel){S.orders=S.orders.filter(function(x){return x.id!=d.cancel});confirmId="";save()}else{confirmId="c"+d.cancel}}
+  else if(d.del){S.menu=S.menu.filter(function(m){return m.id!=d.del});delete cart[d.del];save()}
+  else if(t.id==="madd"){
+    var n=$("#mn").value.trim(),p=parseInt(en($("#mp").value).replace(/[^\d]/g,""),10),c=$("#mc").value.trim()||"سایر";
+    if(!n||!p){msg="نام و قیمت (فقط عدد) را وارد کن.";render();return}
+    S.menu.push({id:Date.now(),n:n,p:p,c:c});msg="آیتم به منو اضافه شد ✅";save()}
+  else if(t.id==="reset"){if(confirmId==="r"){S.orders=[];S.seq=1;confirmId="";save()}else{confirmId="r"}}
+  else return;
+  render()});
+render();
+document.addEventListener("keydown",function(e){if(e.key==="Enter"&&e.target.id==="say"){var v=e.target.value.trim();if(v&&!busy)askAgent(v)}});
+if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js").catch(function(){})}
+</script>
+</body>
+</html>
